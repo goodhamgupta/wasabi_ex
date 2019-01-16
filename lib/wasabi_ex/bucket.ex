@@ -12,31 +12,29 @@ defmodule WasabiEx.Bucket do
 
   @spec get(%Payload{}, %Client{}) :: {:ok, String.t()} | no_return()
   def get(%Payload{} = payload, %Client{} = client) do
-    url =
-      "#{Client.get_url(client)}/experiments/#{payload.experiment_id}/buckets/#{payload.label}"
+    url = "#{client.api_endpoint}/experiments/#{payload.experiment_id}/buckets/#{payload.label}"
 
     params = get_params(payload)
 
-    Helper.make_request(url, params, :get)
+    Helper.make_request(client.auth_token, url, params, :get)
   end
 
   @spec create(%Payload{}, %Client{}) :: {:ok, String.t()} | no_return()
   def create(%Payload{} = payload, %Client{} = client) do
-    url = "#{Client.get_url(client)}/experiments/#{payload.experiment_id}/buckets"
+    url = "#{client.api_endpoint}/experiments/#{payload.experiment_id}/buckets"
 
     params = get_params(payload)
 
-    Helper.make_request(url, params, :post)
+    Helper.make_request(client.auth_token, url, params, :post)
   end
 
   @spec delete(%Payload{}, %Client{}) :: {:ok, String.t()} | no_return()
   def delete(%Payload{} = payload, %Client{} = client) do
-    url =
-      "#{Client.get_url(client)}/experiments/#{payload.experiment_id}/buckets/#{payload.label}"
+    url = "#{client.api_endpoint}/experiments/#{payload.experiment_id}/buckets/#{payload.label}"
 
     params = get_params(payload)
 
-    Helper.make_request(url, params, :delete)
+    Helper.make_request(client.auth_token, url, params, :delete)
   end
 
   defp get_params(payload) do

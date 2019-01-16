@@ -6,22 +6,21 @@ defmodule WasabiEx.Analytics do
   alias WasabiEx.{Client, Helper}
   alias WasabiEx.Experiments.Payload
 
-
   def get_counts(%Payload{} = payload, %Client{} = client) do
-    url = "#{Client.get_url(client)}/analytics/experiments/#{payload.id}/counts"
+    url = "#{client.api_endpoint}/analytics/experiments/#{payload.id}/counts"
 
-    Helper.make_request(url, %{}, :get)
+    Helper.make_request(client.auth_token, url, %{}, :get)
   end
 
   def get_statistics(%Payload{} = payload, %Client{} = client) do
-    url = "#{Client.get_url(client)}/analytics/experiments/#{payload.id}/statistics"
+    url = "#{client.api_endpoint}/analytics/experiments/#{payload.id}/statistics"
 
-    Helper.make_request(url, %{}, :get)
+    Helper.make_request(client.auth_token, url, %{}, :get)
   end
 
   def get_dallies(%Payload{} = payload, %Client{} = client) do
-    url = "#{Client.get_url(client)}/analytics/experiments/#{payload.id}/counts/dailies"
+    url = "#{client.api_endpoint}/analytics/experiments/#{payload.id}/counts/dailies"
 
-    Helper.make_request(url, %{}, :get)
+    Helper.make_request(client.auth_token, url, %{}, :get)
   end
 end

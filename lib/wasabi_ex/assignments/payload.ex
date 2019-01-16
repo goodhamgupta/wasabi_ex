@@ -40,6 +40,8 @@ defmodule WasabiEx.Assignments.Payload do
     raise Errors.InvalidParam, "user_id cannot be nil"
   end
 
+  def validate(%Payload{} = payload), do: payload
+
   def new(data) when is_map(data) do
     %__MODULE__{
       application_name: Map.get(data, :application_name),

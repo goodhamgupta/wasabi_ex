@@ -22,3 +22,4 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 wasabi_ex-*.tar
 
+config/dev.exs

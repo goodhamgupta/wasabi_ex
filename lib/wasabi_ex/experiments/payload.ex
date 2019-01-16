@@ -4,7 +4,7 @@ defmodule WasabiEx.Experiments.Payload do
   alias __MODULE__
 
   @keys [
-    id: nil,
+    experiment_id: nil,
     application_name: nil,
     description: nil,
     start_time: nil,
@@ -19,7 +19,7 @@ defmodule WasabiEx.Experiments.Payload do
   defstruct @keys
 
   @type t :: %__MODULE__{
-          id: String.t(),
+          experiment_id: String.t(),
           application_name: String.t(),
           description: String.t(),
           start_time: DateTime.t(),
@@ -31,7 +31,7 @@ defmodule WasabiEx.Experiments.Payload do
           tags: String.t()
         }
 
-  def validate(%Payload{id: nil}) do
+  def validate(%Payload{experiment_id: nil}) do
     raise Errors.InvalidParam, "id cannot be nil"
   end
 
@@ -51,13 +51,25 @@ defmodule WasabiEx.Experiments.Payload do
     raise Errors.InvalidParam, "label cannot be nil"
   end
 
+  def validate(payload), do: payload
+
   def new(data) when is_map(data) do
     %__MODULE__{
-      id: Map.get(data, :id, UUID.uuid4()),
+      experiment_id: Map.get(data, :experiment_id, UUID.uuid4()),
       application_name: Map.get(data, :application_name),
       description: Map.get(data, :description),
-      start_time: Map.get(data, :start_time, DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601()),
-      end_time: Map.get(data, :end_time, DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601()),
+      start_time:
+        Map.get(
+          data,
+          :start_time,
+          DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601()
+        ),
+      end_time:
+        Map.get(
+          data,
+          :end_time,
+          DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601()
+        ),
       rapid_experiment: Map.get(data, :rapid_experiment, false),
       user_cap: Map.get(data, :user_cap, 0),
       label: Map.get(data, :label),
@@ -75,7 +87,7 @@ defmodule WasabiEx.Experiments.Payload do
   """
   def to_map(%Payload{} = payload) do
     %{
-      Constants.id() => payload.id,
+      Constants.id() => payload.experiment_id,
       Constants.application_name() => payload.application_name,
       Constants.description() => payload.description,
       Constants.end_time() => payload.end_time,

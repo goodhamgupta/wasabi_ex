@@ -6,7 +6,7 @@ defmodule WasabiEx.Assignment do
   alias WasabiEx.Assignments.Payload
 
   def get(%Payload{} = payload, %Client{} = client) do
-    url = "#{Client.get_url(client)}/assignments/applications/#{payload.application_name}/
+    url = "#{client.api_endpoint}/assignments/applications/#{payload.application_name}/
       experiments/#{payload.experiment_label}/users/#{payload.user_id}"
 
     params =
@@ -14,20 +14,21 @@ defmodule WasabiEx.Assignment do
       |> Payload.to_map()
       |> Jason.encode!()
 
-    Helper.make_request(url, params, :get)
+    Helper.make_request(client.auth_token, url, params, :get)
   end
 
   def create(%Payload{} = payload, %Client{} = client) do
     url =
-      "#{Client.get_url(client)}/assignments/applications/#{payload.application_name}/experiments/#{
+      "#{client.api_endpoint}/assignments/applications/#{payload.application_name}/experiments/#{
         payload.experiment_label
       }/users/#{payload.user_id}"
 
     params =
       payload
+      |> Payload.validate()
       |> Payload.to_map()
       |> Jason.encode!()
 
-    Helper.make_request(url, params, :post)
+    Helper.make_request(client.auth_token, url, params, :post)
   end
 end

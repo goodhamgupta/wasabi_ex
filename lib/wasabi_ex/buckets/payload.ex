@@ -40,6 +40,8 @@ defmodule WasabiEx.Buckets.Payload do
     raise Errors.InvalidParam, "label cannot be nil"
   end
 
+  def validate(%Payload{} = payload), do: payload
+
   def new(data) when is_map(data) do
     %__MODULE__{
       allocation_percent: Map.get(data, :allocation_percent, 0.5),
