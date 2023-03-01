@@ -49,7 +49,7 @@ defmodule WasabiEx.MixProject do
     [
       maintainers: ["Shubham Gupta"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/scripbox/wasabi_ex"}
+      links: %{"GitHub" => "https://github.com/goodhamgupta/wasabi_ex"}
     ]
   end
 end
